@@ -24,12 +24,12 @@ app.post(
   (req, res) => {
     const result = validationResult(req);
     if (!result.isEmpty()) return res.status(400).json(result.array());
-    SendMail(process.env.IMAP_USER, req.body.email)
+    SendMail(process.env.IMAP_USER, req.body.email, req.body)
       .then((data) => {
-        console.log("data");
         res.status(200).json(data);
       })
       .catch((err) => {
+        console.log(err);
         res.status(500).json(err);
       });
   }

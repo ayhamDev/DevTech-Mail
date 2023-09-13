@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "@maizzle/framework": "latest",
+    "handlebars": "^4.7.8",
     "nodemailer-express-handlebars": "^6.1.0",
     "tailwindcss-box-shadow": "^2.0.0",
     "tailwindcss-email-variants": "^2.0.0",

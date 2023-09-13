@@ -1,13 +1,13 @@
 ---
 title: "Customer Support"
-preheader: "Thank You For Contacting Us"
+preheader: "Customer Info"
 ---
 
 <x-main>
   <div class="sm:px-4 font-sans">
     <table align="center">
       <tr>
-        <td class="w-[552px] max-w-full">
+        <td class="w-[750px] max-w-full">
           <div class="my-12 sm:my-8 text-center">
             <a href="https://devtechsl.com">
               <svg
@@ -45,22 +45,48 @@ preheader: "Thank You For Contacting Us"
               <td
                 class="p-12 sm:px-6 text-base text-slate-700 bg-white rounded shadow-sm"
               >
-                <h1
-                  class="m-0 mb-6 text-2xl sm:leading-8 text-[#222222] font-semibold"
-                >
-                  Hello
-                  <span class="text-indigo-300">@{{ name }}</span>
+                <h1 class="m-0 mb-6 sm:leading-8 text-[#222222] font-semibold">
+                  Customer Info:
                 </h1>
-
-                <p class="m-0 leading-6 text-[#222222] opacity-80">
-                  Thank You For Contact Us.
-                  <br />
-                  We Just Wanted To Let You Know That We Have Recived You Email
-                  and We Are Looking Forward Into Reading it, We Will Contact
-                  You Shortly, Have a Nice day.
-                </p>
+                <h3
+                  class="m-0 mb-2 font-normal leading-6 text-[#222222] opacity-80"
+                >
+                  Name :
+                  <span class="text-indigo-300 font-semibold">@{{name}}</span>
+                </h3>
+                <h3
+                  class="m-0 mb-2 font-normal leading-6 text-[#222222] opacity-80"
+                >
+                  Company :
+                  <span class="text-indigo-300 font-semibold"
+                    >@{{company}}</span
+                  >
+                </h3>
+                <h3
+                  class="m-0 mb-2 font-normal leading-6 text-[#222222] opacity-80"
+                >
+                  Email :
+                  <a
+                    href="mailto:@{{email}}"
+                    class="text-indigo-300 font-semibold"
+                    >@{{email}}</a
+                  >
+                </h3>
+                <h3
+                  class="m-0 mb-2 font-normal leading-6 text-[#222222] opacity-80"
+                >
+                  Phone Number :
+                  <a href="tel:@{{phone}}" class="text-indigo-300 font-semibold"
+                    >@{{phone}}</a
+                  >
+                </h3>
 
                 <x-spacer height="24px" />
+                <x-divider />
+                <h1 class="m-0 mb-6 sm:leading-8 text-[#222222] font-semibold">
+                  @{{ subject }}
+                </h1>
+                <pre class="text-[#222222] opacity-80">@{{ message }}</pre>
               </td>
             </tr>
             <tr role="separator">

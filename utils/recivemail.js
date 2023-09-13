@@ -12,6 +12,7 @@ var imap = new Imap({
 function openInbox() {
   imap.openBox("INBOX", false, (err, box) => {
     if (err) throw err;
+    console.log("inbox Opend");
     MailHandler(box);
   });
 }
@@ -32,9 +33,10 @@ function MailHandler() {
         stream.once("end", function () {
           let headers = Imap.parseHeader(buffer);
           const emailTo = headers.from[0].split(/<|>/)[1];
+          const ClientName = headers.from[0].split(/<|>/)[0];
           if (emailTo == process.env.SMTP_WEBSITE_USER) return null;
 
-          SendMail(emailTo)
+          SendMail(emailTo, { name: ClientName })
             .then((data) => {
               console.log(data);
             })

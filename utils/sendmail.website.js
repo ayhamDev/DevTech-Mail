@@ -1,7 +1,9 @@
 const { createTransport } = require("nodemailer");
 require("dotenv").config();
 const SendAutoReply = require("./sendmail");
-const { response } = require("express");
+const Handlebars = require("handlebars");
+const fs = require("fs");
+
 let transporter = createTransport({
   host: "smtp.titan.email", // <= your smtp server here
   auth: {
@@ -11,23 +13,39 @@ let transporter = createTransport({
   secure: true,
   port: 465,
 });
+
 let mailOptions = {
   from: `${process.env.SMTP_WEBSITE_FROM} <${process.env.SMTP_WEBSITE_USER}>`, // <= should be verified and accepted by service provider. ex.
-  subject: "customer", // <= email subject ex. 'Test email'
-  text: "thank you for contacting with us, we will come back to you soon.", // <= for plain text emails. ex. 'Hello world'
 };
-const SendMail = (To = "", AutoReplyTo = "") => {
+const SendMail = (To = "", AutoReplyTo = "", reqBody) => {
   return new Promise((resovle, reject) => {
+    const data = fs.readFileSync("./mizzle/email/ClientInfo.handlebars", {
+      encoding: "utf-8",
+    });
+    const Mail_UUID = crypto.randomUUID();
+    const template = Handlebars.compile(data);
     transporter
       .sendMail({
         to: To,
+        subject: reqBody.name,
+        html: template({
+          name: reqBody.name,
+          company: reqBody.company,
+          email: reqBody.email,
+          phone: reqBody.phone,
+          subject: reqBody.subject,
+          message: reqBody.message,
+          UUID: Mail_UUID,
+        }),
         ...mailOptions,
       })
       .then((data) => {
         console.log(data);
-        SendAutoReply(AutoReplyTo)
+        SendAutoReply(AutoReplyTo, {
+          name: reqBody.name,
+        })
           .then((data) => {
-            resovle(data);
+            resovle({ data, Mail_UUID });
           })
           .catch((err) => {
             reject({
