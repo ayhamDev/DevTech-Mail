@@ -11,11 +11,9 @@ let transporter = createTransport({
   secure: true,
   port: 465,
 });
-//attach the plugin to the nodemailer transporter
 
 let mailOptions = {
   from: `${process.env.SMTP_FROM} <${process.env.SMTP_USER}>`,
-  subject: "Thank You For Conacting Us", // <= email subject ex. 'Test email'
 };
 const SendMail = (To = "", context) => {
   const data = fs.readFileSync("./mizzle/email/Autoreply.handlebars", {
@@ -25,6 +23,7 @@ const SendMail = (To = "", context) => {
   const template = Handlebars.compile(data);
   return transporter.sendMail({
     to: To,
+    subject: context.name,
     html: template(context),
     ...mailOptions,
   });
