@@ -5,13 +5,20 @@ const ImapConnect = require("./utils/recivemail");
 const { body, validationResult } = require("express-validator");
 const cors = require("cors");
 const SendMail = require("./utils/sendmail.website");
+const moment = require("moment/moment");
 
 const PORT = process.env.PORT || 4200;
 
 app.use(cors());
 app.use(express.json());
 app.get("/ping", (req, res) => {
-  res.status(200).send();
+  const data = {
+    request_uuid: crypto.randomUUID(),
+    ip: req.ip,
+    date: moment(Date.now()).format("MMMM Do YYYY, h:mm:ss a"),
+  };
+  res.status(200).json(data);
+  console.log(data);
 });
 app.post(
   "/",
